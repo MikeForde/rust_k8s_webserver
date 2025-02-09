@@ -1,4 +1,4 @@
-FROM instrumentisto/rust:nightly-slim
+FROM rust:stable
 
 COPY ./ ./
 
