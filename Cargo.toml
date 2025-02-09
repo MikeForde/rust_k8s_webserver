@@ -8,4 +8,4 @@ authors = ["Nicole Lama <nlama@redhat.com>"]
 
 [dependencies]
 time = "0.1"
-actix-web = "3"
+actix-web = "4.9.0"
