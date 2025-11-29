@@ -1,0 +1,19 @@
+{
+  "name": "rust_k8s_webserver-dev",
+  "image": "mcr.microsoft.com/devcontainers/rust:1",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "rust-analyzer.cargo.targetDir": "target"
+      },
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-vscode.cpptools"
+      ]
+    }
+  },
+  "postCreateCommand": "cargo --version || true"
+}
