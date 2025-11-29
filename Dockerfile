@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/rust:1-1-bullseye
 
+ENV CARGO_HTTP_MULTIPLEXING=false
+
 COPY ./ ./
 
 RUN cargo build --release
