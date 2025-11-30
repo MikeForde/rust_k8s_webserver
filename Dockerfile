@@ -1,12 +1,7 @@
-FROM mcr.microsoft.com/devcontainers/rust:1-1-bullseye
+FROM debian:bullseye-slim
 
-ENV CARGO_HTTP_MULTIPLEXING=false
-ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+WORKDIR /app
+COPY target/release/hello_cargo ./hello_cargo
 
-COPY ./ ./
-
-# RUN cargo build --release
-
-EXPOSE 8000/tcp
-
-CMD ["./target/release/hello_cargo"]
+EXPOSE 8000
+CMD ["./hello_cargo"]
