@@ -1,22 +1,22 @@
-# Ignore full target directory EXCEPT the release binary
+# Ignore all build artefacts
 /target/
-!/target/release/
-/target/release/*.d
-/target/release/*.rlib
-/target/release/*.rmeta
-/target/release/build/
-/target/release/deps/
+/target/release/
+/target/debug/
+/target/**
 
-/vendor/
+# Allow only the release binary (MANUALLY add it)
+!target/release/
+!target/release/hello_cargo
+
+# Ignore vendoring if previously used
+/vendor
 /.cargo/
 
 # OS junk
 .DS_Store
+*/.DS_Store
 **/.DS_Store
 
-# VS Code devcontainer
-.devcontainer
-.vscode
-
-# Logs
-*.log
+# VS Code + devcontainer
+.vscode/
+.devcontainer/
