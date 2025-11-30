@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 WORKDIR /app
 COPY target/release/hello_cargo ./hello_cargo

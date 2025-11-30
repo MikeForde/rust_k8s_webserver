@@ -1,6 +1,7 @@
 {
   "name": "rust_k8s_webserver-dev",
   "image": "mcr.microsoft.com/devcontainers/rust:1",
+  "remoteUser": "root",              // ⬅️ add this line
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
