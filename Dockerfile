@@ -5,7 +5,7 @@ ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 
 COPY ./ ./
 
-RUN cargo build --release
+# RUN cargo build --release
 
 EXPOSE 8000/tcp
 

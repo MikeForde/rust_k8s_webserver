@@ -1,4 +1,22 @@
-/target
+# Ignore full target directory EXCEPT the release binary
+/target/
+!/target/release/
+/target/release/*.d
+/target/release/*.rlib
+/target/release/*.rmeta
+/target/release/build/
+/target/release/deps/
+
+/vendor/
+/.cargo/
+
+# OS junk
 .DS_Store
-vendor/.DS_Store
-vendor/**/.DS_Store
+**/.DS_Store
+
+# VS Code devcontainer
+.devcontainer
+.vscode
+
+# Logs
+*.log
