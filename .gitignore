@@ -9,7 +9,7 @@
 !target/release/hello_cargo
 
 # Ignore vendoring if previously used
-/vendor
+/vendor/
 /.cargo/
 
 # OS junk
