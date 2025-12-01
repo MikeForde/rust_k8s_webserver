@@ -18,7 +18,6 @@ vendor/
 
 # VSCode/devcontainer junk
 .vscode/
-.devcontainer/
 
 # macOS junk
 .DS_Store
