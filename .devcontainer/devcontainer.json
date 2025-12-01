@@ -1,6 +1,11 @@
 {
   "name": "rust_k8s_webserver-dev",
-  "image": "mcr.microsoft.com/devcontainers/rust:1",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+    // Optional: you can also add build options here:
+    // "options": ["--platform=linux/amd64"]
+  },
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
