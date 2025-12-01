@@ -11,5 +11,5 @@ devcontainer (incl. Dockerfile) + Dockerfile (for OpenShift) adjusted such that 
 # Mac ARM64
 Devcontainer "--platform=linux/amd64" option included so will run in QEMU mode on Mac so pre-compile binaries match what OpenShift would have produced.
 This seems slower than alternatives, i.e.,
-1. Running Ubuntu in UTM (on Mac).
+1. Running devcontainer in VSCode/docker in Ubuntu in UTM (on Mac).
 2. Fatest naturally is not using Mac Arm64 and running devcontainer on native Linux (and presumably PC but not tried as yet).
