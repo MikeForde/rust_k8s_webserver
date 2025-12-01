@@ -1,2 +1,2 @@
 # .devcontainer/Dockerfile
-FROM --platform=linux/amd64 mmcr.microsoft.com/devcontainers/rust:1-1-bullseye
+FROM --platform=linux/amd64 mcr.microsoft.com/devcontainers/rust:1-1-bullseye
