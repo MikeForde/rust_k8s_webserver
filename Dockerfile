@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM mcr.microsoft.com/devcontainers/rust:1-1-bullseye
 
 WORKDIR /app
 COPY target/release/hello_cargo ./hello_cargo
