@@ -8,6 +8,9 @@
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
+  "runArgs": [
+    "--platform=linux/amd64"
+  ],
   "customizations": {
     "vscode": {
       "settings": {

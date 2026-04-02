@@ -1,17 +1,16 @@
-# Ignore everything under target/
-target/**
+# Ignore build output
+target/*
 
-# BUT allow this directory
-!target/
+# Re-include the release artifact we want to keep
 !target/release/
+target/release/*
 !target/release/hello_cargo
 
-# Ignore all other build artefacts inside release/
-target/release/*.d
-target/release/*.rlib
-target/release/*.rmeta
-target/release/deps/
-target/release/build/
+# Other ignores
+vendor/
+.vscode/
+.DS_Store
+**/.DS_Store
 
 # Vendor (if still present)
 vendor/
