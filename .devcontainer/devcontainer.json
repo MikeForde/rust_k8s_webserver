@@ -11,6 +11,9 @@
   "runArgs": [
     "--platform=linux/amd64"
   ],
+  "remoteEnv": {
+    "PATH": "/home/vscode/.opencode/bin:${containerEnv:PATH}"
+  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -22,5 +25,5 @@
       ]
     }
   },
-  "postCreateCommand": "cargo --version || true"
+  "postCreateCommand": "bash -lc 'set -e; cargo --version || true; if ! command -v curl >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y curl; fi; if [ ! -x /home/vscode/.opencode/bin/opencode ]; then curl -fsSL https://opencode.ai/install | bash; fi; /home/vscode/.opencode/bin/opencode --help >/dev/null || true'"
 }
