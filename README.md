@@ -1,15 +1,102 @@
-# simple_rust_webserver
+# SNOMED Browser
 
-referenced https://github.com/actix/examples/blob/master/basics/hello-world/
+This project is a small Rust web application that provides a browser for SNOMED CT concepts using a `snowstorm-lite` FHIR endpoint.
 
-# OpenShift
+It serves a simple HTML UI that lets you:
 
-devcontainer (incl. Dockerfile) + Dockerfile (for OpenShift) adjusted such that it can be deployed with pre-compiled binary as an experiment in:
-1. Reducing compile time on OS.
-2. By-passing the need to communicate with crates.io - as an alternative to the vendor approach - for a certain organisational flavour of OpenShift
+- search SNOMED CT terms
+- inspect concept details for a selected code
+- proxy requests to `snowstorm-lite` from the browser through the Rust server
 
-# Mac ARM64
-Devcontainer "--platform=linux/amd64" option included so will run in QEMU mode on Mac so pre-compile binaries match what OpenShift would have produced.
-This seems slower than alternatives, i.e.,
-1. Running devcontainer in VSCode/docker in Ubuntu in UTM (on Mac).
-2. Fatest naturally is not using Mac Arm64 and running devcontainer on native Linux (and presumably PC but not tried as yet).
+The server is built with `actix-web` and uses `reqwest` to call the backing FHIR API.
+
+## How It Works
+
+The application exposes three routes:
+
+- `/` renders the browser UI
+- `/api/search?q=<term>` calls FHIR `ValueSet/$expand` against `snowstorm-lite`
+- `/api/lookup/<code>` calls FHIR `CodeSystem/$lookup` for a SNOMED CT concept
+
+Search results return concept code and display text. Selecting a concept loads additional fields where available, including:
+
+- display
+- code
+- fully specified name (FSN)
+- version
+- inactive flag
+- module ID
+- effective time
+
+## Configuration
+
+The application uses the `SNOWSTORM_BASE` environment variable to locate the backing FHIR service.
+
+Example:
+
+```bash
+export SNOWSTORM_BASE="https://your-snowstorm-lite-host/fhir"
+```
+
+If `SNOWSTORM_BASE` is not set, the app falls back to the default configured in `src/main.rs`.
+
+## Run Locally
+
+Start the development server with Cargo:
+
+```bash
+cargo run
+```
+
+The app listens on:
+
+```text
+http://0.0.0.0:8080
+```
+
+Open `http://localhost:8080` in a browser.
+
+## Build
+
+Create a release binary with:
+
+```bash
+cargo build --release
+```
+
+The compiled binary is written to:
+
+```text
+target/release/hello_cargo
+```
+
+## Container Image
+
+The `Dockerfile` is set up to copy in a prebuilt release binary rather than compiling inside the image.
+
+Typical flow:
+
+```bash
+cargo build --release
+docker build -t snomed-browser .
+docker run -p 8080:8080 -e SNOWSTORM_BASE="https://your-snowstorm-lite-host/fhir" snomed-browser
+```
+
+## API Notes
+
+The application currently targets the following FHIR operations:
+
+- `ValueSet/$expand?url=http://snomed.info/sct?fhir_vs&filter=<term>`
+- `CodeSystem/$lookup?system=http://snomed.info/sct&code=<code>`
+
+This keeps the browser UI simple while relying on `snowstorm-lite` for terminology search and concept lookup behaviour.
+
+## OpenShift / Prebuilt Binary Approach
+
+This repository still uses the earlier prebuilt-binary deployment approach for container usage and OpenShift experiments:
+
+- build the Rust binary ahead of time
+- copy the binary into the runtime image
+- avoid compiling in-cluster
+
+That approach reduces deployment-time compilation and avoids depending on crate downloads during image build in restricted environments.
