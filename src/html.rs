@@ -5,6 +5,15 @@ pub const INDEX_HTML: &str = r#"<!doctype html>
   <title>Simple SNOMED Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+  .nav-card {
+    cursor: pointer;
+  }
+
+  .nav-card:hover {
+    background: #f1f5f9;
+    border-color: #bcd3ee;
+  }
+  
     .concept-card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -197,45 +206,54 @@ pub const INDEX_HTML: &str = r#"<!doctype html>
         const data = await resp.json();
 
         detailsEl.innerHTML = `
-            <h3 class="section-title">Parents</h3>
-            ${renderConceptList(data.parents)}
+          <h3 class="section-title">Parents</h3>
+          ${renderConceptList(data.parents)}
 
-            <h3 class="section-title">Concept</h3>
-            <div class="concept-card current">
-                <div class="concept-name">${escapeHtml(data.display || '')}</div>
-                <div class="concept-meta">${escapeHtml(data.code || '')}</div>
-                <div style="margin-top:8px;"><strong>FSN:</strong> ${escapeHtml(data.fsn || '')}</div>
-                <div><strong>Inactive:</strong> ${escapeHtml(String(data.inactive))}</div>
-                <div><strong>Effective time:</strong> ${escapeHtml(data.effective_time || '')}</div>
-            </div>
+          <h3 class="section-title">Concept</h3>
+          <div class="concept-card current">
+            <div class="concept-name">${escapeHtml(data.display || '')}</div>
+            <div class="concept-meta">${escapeHtml(data.code || '')}</div>
+            <div style="margin-top:8px;"><strong>FSN:</strong> ${escapeHtml(data.fsn || '')}</div>
+            <div><strong>Inactive:</strong> ${escapeHtml(String(data.inactive))}</div>
+            <div><strong>Effective time:</strong> ${escapeHtml(data.effective_time || '')}</div>
+          </div>
 
-            <h3 class="section-title">Children</h3>
-            ${renderConceptList(data.children)}
+          <h3 class="section-title">Children</h3>
+          ${renderConceptList(data.children)}
 
-            <h3>Raw</h3>
-            <pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre>
-            `;
+          <h3>Raw</h3>
+          <pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre>
+        `;
+
+        detailsEl.querySelectorAll('[data-code]').forEach(el => {
+          el.addEventListener('click', () => {
+            const nextCode = el.getAttribute('data-code');
+            if (nextCode) {
+              loadDetails(nextCode);
+            }
+          });
+        });
       } catch (err) {
         detailsEl.innerHTML = `<div class="muted">Lookup failed: ${escapeHtml(String(err))}</div>`;
       }
     }
 
     function renderConceptList(items) {
-        if (!Array.isArray(items) || items.length === 0) {
-            return '<div class="muted">None</div>';
-        }
+      if (!Array.isArray(items) || items.length === 0) {
+        return '<div class="muted">None</div>';
+      }
 
-        return `
-            <div class="concept-list">
-            ${items.map(item => `
-                <div class="concept-card">
-                <div class="concept-name">${escapeHtml(item.display || '')}</div>
-                <div class="concept-meta">(${escapeHtml(item.code || '')})</div>
-                </div>
-            `).join('')}
+      return `
+        <div class="concept-list">
+          ${items.map(item => `
+            <div class="concept-card nav-card" data-code="${escapeHtml(item.code || '')}">
+              <div class="concept-name">${escapeHtml(item.display || '')}</div>
+              <div class="concept-meta">(${escapeHtml(item.code || '')})</div>
             </div>
-        `;
-        }
+          `).join('')}
+        </div>
+      `;
+    }
 
     function escapeHtml(str) {
       return String(str)
