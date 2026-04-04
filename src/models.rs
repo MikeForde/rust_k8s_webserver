@@ -5,6 +5,7 @@ use serde_json::Value;
 pub struct SearchItem {
     pub code: String,
     pub display: String,
+    pub inactive: Option<bool>,
 }
 
 #[derive(Serialize)]

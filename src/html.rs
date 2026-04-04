@@ -230,6 +230,34 @@ const SHARED_STYLES: &str = r##"
       margin-bottom: 16px;
     }
 
+    .search-row .grow {
+      flex: 1 1 320px;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .toggle input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      accent-color: var(--accent);
+    }
+
     .field-row.two-col {
       display: grid;
       grid-template-columns: 150px minmax(0, 1fr);
@@ -366,6 +394,41 @@ const SHARED_STYLES: &str = r##"
       border-color: #83aee3;
     }
 
+    .result.inactive,
+    .concept-card.inactive {
+      background: #fff3f3;
+      border-color: #eccaca;
+    }
+
+    .concept-card.current.inactive {
+      background: linear-gradient(180deg, #eef5ff, #fff3f3);
+      border-color: #d7b3b3;
+    }
+
+    .result-header,
+    .concept-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .inactive-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f8dede;
+      color: #8d3f3f;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .results-summary {
+      margin-bottom: 12px;
+    }
+
     .concept-meta,
     .code {
       color: var(--muted);
@@ -450,7 +513,11 @@ const SHARED_STYLES: &str = r##"
 
 const BROWSER_BODY: &str = r##"
     <div class="search-row">
-      <input id="searchBox" placeholder="Type a term, e.g. appendicitis, asthma, penicillin" />
+      <input id="searchBox" class="grow" placeholder="Type a term, e.g. appendicitis, asthma, penicillin" />
+      <label class="toggle" for="inactiveFilter">
+        <input id="inactiveFilter" type="checkbox" />
+        <span>Hide inactive</span>
+      </label>
       <button id="searchBtn">Search</button>
     </div>
 
@@ -486,19 +553,28 @@ const BROWSER_BODY: &str = r##"
     </section>
 "##;
 
-const BROWSER_SCRIPT: &str = r##"
+const BROWSER_SCRIPT_TEMPLATE: &str = r##"
+    const INACTIVE_FILTERED_DEFAULT = __INACTIVE_FILTERED__;
     const searchBox = document.getElementById('searchBox');
     const searchBtn = document.getElementById('searchBtn');
+    const inactiveFilterEl = document.getElementById('inactiveFilter');
     const resultsEl = document.getElementById('results');
     const detailsEl = document.getElementById('details');
+    let hasSearched = false;
+    let lastSearchResults = [];
+
+    inactiveFilterEl.checked = INACTIVE_FILTERED_DEFAULT;
 
     async function runSearch() {
       const q = searchBox.value.trim();
       if (!q) {
+        hasSearched = false;
+        lastSearchResults = [];
         resultsEl.innerHTML = '<div class="muted">Enter a search term.</div>';
         return;
       }
 
+      hasSearched = true;
       resultsEl.innerHTML = '<div class="muted">Searching...</div>';
       detailsEl.innerHTML = '<div class="muted">Select a concept from the results.</div>';
 
@@ -507,24 +583,62 @@ const BROWSER_SCRIPT: &str = r##"
         const data = await resp.json();
 
         if (!Array.isArray(data) || data.length === 0) {
+          lastSearchResults = [];
           resultsEl.innerHTML = '<div class="muted">No results found.</div>';
           return;
         }
 
-        resultsEl.innerHTML = '';
-        data.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'result';
-          row.innerHTML = `
-            <div class="display">${escapeHtml(item.display)}</div>
-            <div class="code">${escapeHtml(item.code)}</div>
-          `;
-          row.addEventListener('click', () => loadDetails(item.code));
-          resultsEl.appendChild(row);
-        });
+        lastSearchResults = data;
+        renderSearchResults();
       } catch (err) {
+        lastSearchResults = [];
         resultsEl.innerHTML = `<div class="muted">Search failed: ${escapeHtml(String(err))}</div>`;
       }
+    }
+
+    function renderSearchResults() {
+      if (!Array.isArray(lastSearchResults) || lastSearchResults.length === 0) {
+        resultsEl.innerHTML = hasSearched
+          ? '<div class="muted">No results found.</div>'
+          : '<div class="muted">Enter a search term to begin.</div>';
+        return;
+      }
+
+      const filteredResults = inactiveFilterEl.checked
+        ? lastSearchResults.filter(item => item.inactive !== true)
+        : lastSearchResults;
+      const hiddenCount = lastSearchResults.length - filteredResults.length;
+
+      if (filteredResults.length === 0) {
+        resultsEl.innerHTML = hiddenCount > 0
+          ? `<div class="muted">No active results found. Uncheck the filter to show ${hiddenCount} inactive concept${hiddenCount === 1 ? '' : 's'}.</div>`
+          : '<div class="muted">No results found.</div>';
+        return;
+      }
+
+      resultsEl.innerHTML = `
+        ${hiddenCount > 0 ? `<div class="results-summary muted small">Showing ${filteredResults.length} of ${lastSearchResults.length} results. ${hiddenCount} inactive concept${hiddenCount === 1 ? '' : 's'} hidden.</div>` : ''}
+        ${filteredResults.map(item => `
+          <div class="result${item.inactive === true ? ' inactive' : ''}" data-code="${escapeHtml(item.code || '')}">
+            <div class="result-header">
+              <div>
+                <div class="display">${escapeHtml(item.display || '')}</div>
+                <div class="code">${escapeHtml(item.code || '')}</div>
+              </div>
+              ${item.inactive === true ? '<span class="inactive-badge">Inactive</span>' : ''}
+            </div>
+          </div>
+        `).join('')}
+      `;
+
+      resultsEl.querySelectorAll('[data-code]').forEach(el => {
+        el.addEventListener('click', () => {
+          const code = el.getAttribute('data-code');
+          if (code) {
+            loadDetails(code);
+          }
+        });
+      });
     }
 
     async function loadDetails(code) {
@@ -539,9 +653,14 @@ const BROWSER_SCRIPT: &str = r##"
           ${renderConceptList(data.parents)}
 
           <h3 class="section-title">Concept</h3>
-          <div class="concept-card current">
-            <div class="concept-name">${escapeHtml(data.display || '')}</div>
-            <div class="concept-meta">${escapeHtml(data.code || '')}</div>
+          <div class="concept-card current${data.inactive === true ? ' inactive' : ''}">
+            <div class="concept-header">
+              <div>
+                <div class="concept-name">${escapeHtml(data.display || '')}</div>
+                <div class="concept-meta">${escapeHtml(data.code || '')}</div>
+              </div>
+              ${data.inactive === true ? '<span class="inactive-badge">Inactive</span>' : ''}
+            </div>
             <div style="margin-top:8px;"><strong>FSN:</strong> ${escapeHtml(data.fsn || '')}</div>
             <div><strong>Inactive:</strong> ${escapeHtml(String(data.inactive))}</div>
             <div><strong>Effective time:</strong> ${escapeHtml(data.effective_time || '')}</div>
@@ -594,6 +713,7 @@ const BROWSER_SCRIPT: &str = r##"
     }
 
     searchBtn.addEventListener('click', runSearch);
+    inactiveFilterEl.addEventListener('change', renderSearchResults);
     searchBox.addEventListener('keydown', event => {
       if (event.key === 'Enter') {
         runSearch();
@@ -1462,6 +1582,13 @@ fn tool_script(operations: &str) -> String {
     TOOL_SCRIPT_TEMPLATE.replace("__OPERATIONS__", operations)
 }
 
+fn browser_script(inactive_filtered: bool) -> String {
+    BROWSER_SCRIPT_TEMPLATE.replace(
+        "__INACTIVE_FILTERED__",
+        if inactive_filtered { "true" } else { "false" },
+    )
+}
+
 fn tool_page(
     page_title: &str,
     heading: &str,
@@ -1479,13 +1606,13 @@ fn tool_page(
     )
 }
 
-pub fn browser_page() -> String {
+pub fn browser_page(inactive_filtered: bool) -> String {
     render_page(
         "SNOMED Browser",
         "SNOMED Browser",
         "Search SNOMED CT International terms using Snowstorm Lite.",
         BROWSER_BODY,
-        BROWSER_SCRIPT,
+        &browser_script(inactive_filtered),
         "browser",
     )
 }

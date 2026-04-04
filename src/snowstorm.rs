@@ -177,6 +177,7 @@ pub async fn search_concepts(
                     Some(SearchItem {
                         code: item.get("code")?.as_str()?.to_string(),
                         display: item.get("display")?.as_str()?.to_string(),
+                        inactive: item.get("inactive").and_then(|value| value.as_bool()),
                     })
                 })
                 .collect::<Vec<_>>()

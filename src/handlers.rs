@@ -19,8 +19,8 @@ fn html_response(page: String) -> HttpResponse {
 }
 
 #[get("/")]
-pub async fn index() -> impl Responder {
-    html_response(browser_page())
+pub async fn index(data: web::Data<AppState>) -> impl Responder {
+    html_response(browser_page(data.inactive_filtered))
 }
 
 #[get("/codesystems")]
