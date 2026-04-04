@@ -185,6 +185,26 @@ const SHARED_STYLES: &str = r##"
       min-width: 0;
     }
 
+    @media (min-width: 761px) {
+      .grid > .panel,
+      .tool-grid > .panel {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .grid > .panel .panel-body,
+      .tool-grid > .panel .panel-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        max-height: calc(100vh - 280px);
+        overflow: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        padding-right: 4px;
+      }
+    }
+
     .mini-card {
       display: block;
       padding: 16px;
