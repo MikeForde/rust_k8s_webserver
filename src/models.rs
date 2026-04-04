@@ -1,4 +1,5 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Serialize)]
 pub struct SearchItem {
@@ -21,4 +22,21 @@ pub struct LookupResponse {
     pub fsn: Option<String>,
     pub parents: Vec<RelatedConcept>,
     pub children: Vec<RelatedConcept>,
+}
+
+#[derive(Deserialize)]
+pub struct QueryParam {
+    pub key: String,
+    pub value: String,
+}
+
+#[derive(Deserialize)]
+pub struct ProxyRequest {
+    pub method: String,
+    #[serde(default)]
+    pub path: String,
+    #[serde(default)]
+    pub query: Vec<QueryParam>,
+    pub body: Option<Value>,
+    pub password: Option<String>,
 }

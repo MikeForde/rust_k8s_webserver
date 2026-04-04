@@ -1,0 +1,2578 @@
+{
+  "info": {
+    "_postman_id": "1217ff2c-7b59-4f00-b713-a21c6826381c",
+    "name": "Snowstorm Lite, FHIR R4B",
+    "description": "SNOMED International's open source SNOMED CT FHIR Terminology Server, Snowstorm Lite, [https://github.com/IHTSDO/snowstorm-lite](https://github.com/IHTSDO/snowstorm-lite).\n\n**Note** You will need to set up an environment to use for url variable on the APIs. Either [http://localhost:8080](http://localhost:8080) if running a local instance or another URL of an instance available to you.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49711186",
+    "_collection_link": "https://go.postman.co/collection/49711186-1217ff2c-7b59-4f00-b713-a21c6826381c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "CodeSystem",
+      "item": [
+        {
+          "name": "List Code Systems",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/CodeSystem?_count=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "CodeSystem"
+              ],
+              "query": [
+                {
+                  "key": "_count",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "List all CodeSystem resources on the server. Results limited to 10."
+          },
+          "response": []
+        },
+        {
+          "name": "Find CodeSystem by url and version",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/CodeSystem?url=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008/version/20241101",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "CodeSystem"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "version",
+                  "value": "http://snomed.info/sct/900000000000207008/version/20241101"
+                }
+              ]
+            },
+            "description": "Find CodeSystem resources that match the supplied url and version."
+          },
+          "response": []
+        }
+      ],
+      "description": "Given a code/system, or a Coding, get additional details about the concept, including definition, status, designations, and properties",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lookup",
+      "item": [
+        {
+          "name": "Lookup concept by code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/CodeSystem/$lookup?system=http://snomed.info/sct&code=73211009",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "CodeSystem",
+                "$lookup"
+              ],
+              "query": [
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "code",
+                  "value": "73211009"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Lookup concept by code",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/CodeSystem/$lookup?system=http://snomed.info/sct&code=73211009",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "CodeSystem",
+                    "$lookup"
+                  ],
+                  "query": [
+                    {
+                      "key": "system",
+                      "value": "http://snomed.info/sct"
+                    },
+                    {
+                      "key": "code",
+                      "value": "73211009"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 18 Jul 2022 11:57:11 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "zh1OHZFzALrxRJGb"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, OPTIONS, DELETE, PUT"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "User-Agent,Keep-Alive,Content-Type"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"code\",\n            \"valueString\": \"73211009\"\n        },\n        {\n            \"name\": \"display\",\n            \"valueString\": \"Diabetes mellitus\"\n        },\n        {\n            \"name\": \"name\",\n            \"valueString\": \"International Edition\"\n        },\n        {\n            \"name\": \"system\",\n            \"valueString\": \"http://snomed.info/sct\"\n        },\n        {\n            \"name\": \"version\",\n            \"valueString\": \"http://snomed.info/sct/900000000000207008/version/20220630\"\n        },\n        {\n            \"name\": \"active\",\n            \"valueBoolean\": true\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"effectiveTime\"\n                },\n                {\n                    \"name\": \"valueString\",\n                    \"valueString\": \"20020131\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"moduleId\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"900000000000207008\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000003001\",\n                                \"display\": \"Fully specified name\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000003001\",\n                                \"display\": \"Fully specified name\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000003001\",\n                        \"display\": \"Fully specified name\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"Diabetes mellitus (disorder)\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000013009\",\n                        \"display\": \"Synonym\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"Diabetes mellitus\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000549004\",\n                                \"display\": \"ACCEPTABLE\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000549004\",\n                                \"display\": \"ACCEPTABLE\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000013009\",\n                        \"display\": \"Synonym\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"DM - Diabetes mellitus\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"parent\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"362969004\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"parent\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"126877002\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"722206009\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"703136005\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"609568004\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"46635009\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"530558861000132104\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"609569007\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"199223000\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"716362006\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"733072002\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"105401000119101\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"8801005\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"123763000\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"44054006\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"111552007\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"890171006\"\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Lookup concept and specific properties",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/CodeSystem/$lookup?system=http://snomed.info/sct&code=73211009&property=normalForm&property=sufficientlyDefined",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "CodeSystem",
+                "$lookup"
+              ],
+              "query": [
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "code",
+                  "value": "73211009"
+                },
+                {
+                  "key": "property",
+                  "value": "normalForm"
+                },
+                {
+                  "key": "property",
+                  "value": "sufficientlyDefined"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Lookup concept and specific properties",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/CodeSystem/$lookup?system=http://snomed.info/sct&code=73211009&property=normalForm&property=sufficientlyDefined",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "CodeSystem",
+                    "$lookup"
+                  ],
+                  "query": [
+                    {
+                      "key": "system",
+                      "value": "http://snomed.info/sct"
+                    },
+                    {
+                      "key": "code",
+                      "value": "73211009"
+                    },
+                    {
+                      "key": "property",
+                      "value": "normalForm"
+                    },
+                    {
+                      "key": "property",
+                      "value": "sufficientlyDefined"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 18 Jul 2022 11:57:27 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "ZWylWnE8628NdOgI"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, OPTIONS, DELETE, PUT"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "User-Agent,Keep-Alive,Content-Type"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"code\",\n            \"valueString\": \"73211009\"\n        },\n        {\n            \"name\": \"display\",\n            \"valueString\": \"Diabetes mellitus\"\n        },\n        {\n            \"name\": \"name\",\n            \"valueString\": \"International Edition\"\n        },\n        {\n            \"name\": \"system\",\n            \"valueString\": \"http://snomed.info/sct\"\n        },\n        {\n            \"name\": \"version\",\n            \"valueString\": \"http://snomed.info/sct/900000000000207008/version/20220630\"\n        },\n        {\n            \"name\": \"active\",\n            \"valueBoolean\": true\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"effectiveTime\"\n                },\n                {\n                    \"name\": \"valueString\",\n                    \"valueString\": \"20020131\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"moduleId\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"900000000000207008\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"sufficientlyDefined\"\n                },\n                {\n                    \"name\": \"valueBoolean\",\n                    \"valueString\": \"false\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"normalForm\"\n                },\n                {\n                    \"name\": \"valueString\",\n                    \"valueString\": \"362969004|Disorder of endocrine system (disorder)| + 126877002|Disorder of glucose metabolism (disorder)| : { 363698007|Finding site (attribute)| = 113331007|Structure of endocrine system (body structure)| }\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000003001\",\n                                \"display\": \"Fully specified name\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000003001\",\n                                \"display\": \"Fully specified name\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000003001\",\n                        \"display\": \"Fully specified name\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"Diabetes mellitus (disorder)\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000548007\",\n                                \"display\": \"PREFERRED\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000013009\",\n                        \"display\": \"Synonym\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"Diabetes mellitus\"\n                }\n            ]\n        },\n        {\n            \"extension\": [\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000509007\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000549004\",\n                                \"display\": \"ACCEPTABLE\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"url\": \"http://snomed.info/fhir/StructureDefinition/designation-use-context\",\n                    \"extension\": [\n                        {\n                            \"url\": \"context\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000508004\"\n                            }\n                        },\n                        {\n                            \"url\": \"role\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000549004\",\n                                \"display\": \"ACCEPTABLE\"\n                            }\n                        },\n                        {\n                            \"url\": \"type\",\n                            \"valueCoding\": {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"900000000000013009\",\n                                \"display\": \"Synonym\"\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"name\": \"designation\",\n            \"part\": [\n                {\n                    \"name\": \"language\",\n                    \"valueCode\": \"en\"\n                },\n                {\n                    \"name\": \"use\",\n                    \"valueCoding\": {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"900000000000013009\",\n                        \"display\": \"Synonym\"\n                    }\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueString\": \"DM - Diabetes mellitus\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"parent\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"362969004\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"parent\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"126877002\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"722206009\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"703136005\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"609568004\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"46635009\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"530558861000132104\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"609569007\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"199223000\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"716362006\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"733072002\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"105401000119101\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"8801005\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"123763000\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"44054006\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"111552007\"\n                }\n            ]\n        },\n        {\n            \"name\": \"property\",\n            \"part\": [\n                {\n                    \"name\": \"code\",\n                    \"valueString\": \"child\"\n                },\n                {\n                    \"name\": \"value\",\n                    \"valueCode\": \"890171006\"\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Subsumes",
+      "item": [
+        {
+          "name": "Test for concept subsumption",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/CodeSystem/$subsumes?system=http://snomed.info/sct&codeA=307355007&codeB=118940003",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "CodeSystem",
+                "$subsumes"
+              ],
+              "query": [
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "codeA",
+                  "value": "307355007"
+                },
+                {
+                  "key": "codeB",
+                  "value": "118940003"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Test for concept subsumption",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/CodeSystem/$subsumes?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008/version/20200131&codeA=307355007&codeB=118940003",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "CodeSystem",
+                    "$subsumes"
+                  ],
+                  "query": [
+                    {
+                      "key": "system",
+                      "value": "http://snomed.info/sct"
+                    },
+                    {
+                      "key": "version",
+                      "value": "http://snomed.info/sct/900000000000207008/version/20200131"
+                    },
+                    {
+                      "key": "codeA",
+                      "value": "307355007"
+                    },
+                    {
+                      "key": "codeB",
+                      "value": "118940003"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 Jul 2022 09:43:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "7q2SgppDOXpAk58Q"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15768000"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"outcome\",\n            \"valueString\": \"subsumed-by\"\n        },\n        {\n            \"name\": \"system\",\n            \"valueString\": \"http://snomed.info/sct\"\n        },\n        {\n            \"name\": \"version\",\n            \"valueString\": \"http://snomed.info/sct/900000000000207008/version/20200131\"\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ValueSet",
+      "item": [
+        {
+          "name": "List Value Sets",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "url",
+                  "value": "http://example.com/value-sets/chronic-diseases",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "List all the value sets on the server instance"
+          },
+          "response": []
+        },
+        {
+          "name": "Create a ValueSet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"ValueSet\",\n    \"url\": \"http://example.com/fhir/vs/gender\",\n    \"version\": \"0.1\",\n    \"title\": \"Gender\",\n    \"name\": \"gender\",\n    \"description\": \"List of possible genders for patient details capture.\",\n    \"status\": \"draft\",\n    \"experimental\": true,\n    \"compose\": {\n        \"include\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"concept\": [\n                    {\n                        \"code\": \"248153007\"\n                    },\n                    {\n                        \"code\": \"248152002\"\n                    },\n                    {\n                        \"code\": \"32570691000036108\"\n                    },\n                    {\n                        \"code\": \"407377005\"\n                    },\n                    {\n                        \"code\": \"407376001\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a ValueSet with specific id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"ValueSet\",\n    \"url\": \"http://example.com/fhir/vs/sex\",\n    \"id\": \"sex\",\n    \"version\": \"0.1\",\n    \"name\": \"Sex\",\n    \"description\": \"List of possible sexes for patient details capture.\",\n    \"status\": \"draft\",\n    \"experimental\": true,\n    \"compose\": {\n        \"include\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"concept\": [\n                    {\n                        \"code\": \"248153007\"\n                    },\n                    {\n                        \"code\": \"248152002\"\n                    },\n                    {\n                        \"code\": \"32570691000036108\"\n                    },\n                    {\n                        \"code\": \"407377005\"\n                    },\n                    {\n                        \"code\": \"407376001\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet/sex",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "sex"
+              ]
+            },
+            "description": "PUT is used to create a ValueSet with a specific identifier. This operation will overwrite any existing ValueSet with this identifier."
+          },
+          "response": []
+        },
+        {
+          "name": "Create an intensional ValueSet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"resourceType\": \"ValueSet\",\r\n    \"url\": \"http://example.com/value-sets/chronic-diseases\",\r\n    \"version\": \"1.0.1\",\r\n    \"status\": \"draft\",\r\n    \"title\": \"Chronic Diseases\",\r\n    \"name\": \"chronic-diseases\",\r\n    \"experimental\": true,\r\n    \"compose\": {\r\n        \"include\": [\r\n            {\r\n                \"system\": \"http://snomed.info/sct\",\r\n                \"filter\": [\r\n                    {\r\n                        \"property\": \"constraint\",\r\n                        \"op\": \"=\",\r\n                        \"value\": \"<< 27624003\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ]
+            },
+            "description": "When creating a ValueSet via POST a Location header is returned with the new real URL for the ValueSet. The URL contains the generated ValueSet identifier."
+          },
+          "response": []
+        },
+        {
+          "name": "Create an intensional ValueSet with excludes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"resourceType\": \"ValueSet\",\r\n  \"url\": \"http://example.com/ValueSet/education-levels\",\r\n  \"version\": \"1\",\r\n  \"title\": \"Education Levels\",\r\n  \"status\": \"draft\",\r\n    \"description\": \"A selection of Education Levels\",\r\n  \"text\": {\r\n    \"status\": \"generated\",\r\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><h2>Education Levels</h2><tt>http://csiro.au/ValueSet/education-levels</tt><p>A selection of Education Levels</p></div>\"\r\n  },\r\n  \"experimental\": true,\r\n  \"compose\": {\r\n    \"include\": [\r\n      {\r\n        \"system\": \"http://snomed.info/sct\",\r\n        \"filter\": [\r\n          {\r\n            \"property\": \"concept\",\r\n            \"op\": \"is-a\",\r\n            \"value\": \"365460000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"exclude\": [\r\n      {\r\n        \"system\": \"http://snomed.info/sct\",\r\n        \"concept\": [\r\n          {\r\n            \"code\": \"224298008\"\r\n          },\r\n          {\r\n            \"code\": \"365460000\"\r\n          },\r\n          {\r\n            \"code\": \"473462005\"\r\n          },\r\n          {\r\n            \"code\": \"424587006\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ]
+            },
+            "description": "When creating a ValueSet via POST a Location header is returned with the new real URL for the ValueSet. The URL contains the generated ValueSet identifier."
+          },
+          "response": []
+        },
+        {
+          "name": "Create an extensional ValueSet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{snowstorm-lite-admin-password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "admin",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"resourceType\": \"ValueSet\",\r\n    \"url\": \"http://example.com/fhir/ValueSet/bahmni-procedures-head\",\r\n    \"version\": \"1\",\r\n    \"name\": \"bahmni-procedures-head\",\r\n    \"title\": \"head4\",\r\n    \"status\": \"draft\",\r\n    \"description\": \"List of possible procedures on the head\",\r\n    \"copyright\": \"This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (SNOMED International), and distributed by agreement between SNOMED International and HL7. Implementer use of SNOMED CT is not covered by this agreement.\",\r\n    \"compose\": {\r\n        \"include\": [\r\n            {\r\n                \"system\": \"http://snomed.info/sct\",\r\n                \"concept\": [\r\n                    {\r\n                        \"code\": \"7486007\"\r\n                    },\r\n                    {\r\n                        \"code\": \"448958000\"\r\n                    },\r\n                    {\r\n                        \"code\": \"302618007\"\r\n                    },\r\n                    {\r\n                        \"code\": \"180290000\"\r\n                    },\r\n                    {\r\n                        \"code\": \"450631000\"\r\n                    },\r\n                    {\r\n                        \"code\": \"287630006\"\r\n                    },\r\n                    {\r\n                        \"code\": \"180288001\"\r\n                    },\r\n                    {\r\n                        \"code\": \"177565006\"\r\n                    },\r\n                    {\r\n                        \"code\": \"23931002\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ]
+            },
+            "description": "When creating a ValueSet via POST a Location header is returned with the new real URL for the ValueSet. The URL contains the generated ValueSet identifier."
+          },
+          "response": []
+        },
+        {
+          "name": "Update a ValueSet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"ValueSet\",\n    \"url\": \"http://example.com/fhir/vs/sex\",\n    \"id\": \"sex\",\n    \"version\": \"0.1\",\n    \"name\": \"Sex\",\n    \"description\": \"List of possible sexes for patient details capture.\",\n    \"status\": \"draft\",\n    \"experimental\": true,\n    \"compose\": {\n        \"include\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"concept\": [\n                    {\n                        \"code\": \"248153007\"\n                    },\n                    {\n                        \"code\": \"248152002\"\n                    },\n                    {\n                        \"code\": \"32570691000036108\"\n                    },\n                    {\n                        \"code\": \"32570681000036106\"\n                    },\n                    {\n                        \"code\": \"407377005\"\n                    },\n                    {\n                        \"code\": \"407376001\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet/sex",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "sex"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "The definition of a value set is used to create a simple collection of codes suitable for use for data entry or validation.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expand",
+      "item": [
+        {
+          "name": "Expand named valueset",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://example.com/value-sets/chronic-diseases&count=100&offset=0",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://example.com/value-sets/chronic-diseases"
+                },
+                {
+                  "key": "count",
+                  "value": "100"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "filter",
+                  "value": "bone",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "includeDesignations",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Expand an implicit ValueSet of all SNOMED CT concepts. If there is no module in the implicit ValueSet url and no version parameter is given then the latest version of the International Edition will be used."
+          },
+          "response": []
+        },
+        {
+          "name": "List all the descendants of a given concept",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=isa/27624003&count=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=isa/27624003"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "This example lists all concepts that are descendants of 27624003 |Chronic disease (disorder)|."
+          },
+          "response": []
+        },
+        {
+          "name": "Run an ECL query",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<<404684003 |Clinical finding (finding)|&filter=skin",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "20",
+                  "disabled": true
+                },
+                {
+                  "key": "includeDesignations",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=ecl/<<404684003 |Clinical finding (finding)|"
+                },
+                {
+                  "key": "filter",
+                  "value": "skin"
+                }
+              ]
+            },
+            "description": "The example ECL query is to retrieve only those concepts whose defining relationships match the given attribute value pairs:\n\n< 404684003 |clinical finding|: 116676008 |associated morphology| = <<52988006 |Lesion (morphologic abnormality)|"
+          },
+          "response": [
+            {
+              "name": "Run an ECL query",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*&count=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ValueSet",
+                    "$expand"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 19 Jul 2022 09:29:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "k6ZBIR4m872BrZ8g"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, OPTIONS, DELETE, PUT"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "User-Agent,Keep-Alive,Content-Type"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"ValueSet\",\n    \"url\": \"http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*\",\n    \"copyright\": \"This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (SNOMED International), and distributed by agreement between SNOMED International and HL7. Implementer use of SNOMED CT is not covered by this agreement.\",\n    \"expansion\": {\n        \"id\": \"eaea5c41-f55e-4dce-bac2-17aec489e17f\",\n        \"timestamp\": \"2022-07-19T09:29:19+00:00\",\n        \"total\": 56978,\n        \"offset\": 0,\n        \"parameter\": [\n            {\n                \"name\": \"version\",\n                \"valueUri\": \"http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20220630\"\n            },\n            {\n                \"name\": \"displayLanguage\",\n                \"valueString\": \"en\"\n            }\n        ],\n        \"contains\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"966011731000119103\",\n                \"display\": \"Acute ulcerative pancolitis\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"939885431000119109\",\n                \"display\": \"Cerebrovascular accident due to embolism of bilateral middle cerebral arteries\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"961792901000119102\",\n                \"display\": \"Left peroneal vein thrombophlebitis\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"957319791000119104\",\n                \"display\": \"Cerebrovascular accident due to thrombosis of left cerebellar artery\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"985355341000119101\",\n                \"display\": \"Malignant melanoma of skin of left wrist\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"939595491000119108\",\n                \"display\": \"Malignant melanoma of skin of right forearm\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"972604701000119104\",\n                \"display\": \"Acquired arteriovenous malformation of vascular structure of gastrointestinal tract\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"959201281000119107\",\n                \"display\": \"Pressure injury of deep tissue of left buttock\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"952768041000119104\",\n                \"display\": \"Bilateral pseudocyst of ears\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"969688801000119108\",\n                \"display\": \"Acute left-sided ulcerative colitis\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Run an ECL query with fuzzy term match",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<404684003&filter=athma~",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "20",
+                  "disabled": true
+                },
+                {
+                  "key": "includeDesignations",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=ecl/<404684003"
+                },
+                {
+                  "key": "filter",
+                  "value": "athma~"
+                }
+              ]
+            },
+            "description": "The example ECL query is to retrieve only those concepts that are descendants of Clinical finding, and also have any active term matching \"athma\" using a fuzzy match.\n\nFuzzy match can be activated by appending the tilde character to the end of the search term.\n\n**Implementation Advice:** Fuzzy search is not as fast as the standard search. It _could_ be triggered automatically by a client system in the case where the stanard search produces no results."
+          },
+          "response": [
+            {
+              "name": "Run an ECL query",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*&count=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ValueSet",
+                    "$expand"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 19 Jul 2022 09:29:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "k6ZBIR4m872BrZ8g"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, OPTIONS, DELETE, PUT"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "User-Agent,Keep-Alive,Content-Type"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"ValueSet\",\n    \"url\": \"http://snomed.info/sct?fhir_vs=ecl/<<404684003:116676008=*\",\n    \"copyright\": \"This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (SNOMED International), and distributed by agreement between SNOMED International and HL7. Implementer use of SNOMED CT is not covered by this agreement.\",\n    \"expansion\": {\n        \"id\": \"eaea5c41-f55e-4dce-bac2-17aec489e17f\",\n        \"timestamp\": \"2022-07-19T09:29:19+00:00\",\n        \"total\": 56978,\n        \"offset\": 0,\n        \"parameter\": [\n            {\n                \"name\": \"version\",\n                \"valueUri\": \"http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20220630\"\n            },\n            {\n                \"name\": \"displayLanguage\",\n                \"valueString\": \"en\"\n            }\n        ],\n        \"contains\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"966011731000119103\",\n                \"display\": \"Acute ulcerative pancolitis\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"939885431000119109\",\n                \"display\": \"Cerebrovascular accident due to embolism of bilateral middle cerebral arteries\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"961792901000119102\",\n                \"display\": \"Left peroneal vein thrombophlebitis\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"957319791000119104\",\n                \"display\": \"Cerebrovascular accident due to thrombosis of left cerebellar artery\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"985355341000119101\",\n                \"display\": \"Malignant melanoma of skin of left wrist\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"939595491000119108\",\n                \"display\": \"Malignant melanoma of skin of right forearm\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"972604701000119104\",\n                \"display\": \"Acquired arteriovenous malformation of vascular structure of gastrointestinal tract\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"959201281000119107\",\n                \"display\": \"Pressure injury of deep tissue of left buttock\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"952768041000119104\",\n                \"display\": \"Bilateral pseudocyst of ears\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"969688801000119108\",\n                \"display\": \"Acute left-sided ulcerative colitis\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Search a valueset for a given term",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<<763158003&filter=Aspirin&count=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=ecl/<<763158003"
+                },
+                {
+                  "key": "filter",
+                  "value": "Aspirin"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Term filtering - ValueSet of all <<763158003 |Medicinal product (product)| containing the word aspirin.  This is not case sensitive."
+          },
+          "response": [
+            {
+              "name": "Search a valueset for a given term",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/<<763158003&filter=Aspirin&count=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ValueSet",
+                    "$expand"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "http://snomed.info/sct?fhir_vs=ecl/<<763158003"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "Aspirin"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 19 Jul 2022 09:34:36 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.6.3-si-SNAPSHOT/8a39f99ce3/2022-07-04 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "X-Request-ID",
+                  "value": "uQfQys82OQrYS3P5"
+                },
+                {
+                  "key": "Content-Location",
+                  "value": "https://dev-is-browser.ihtsdotools.org/fhir/ValueSet/eb0672b6-6340-4651-869b-0fecb1b70564"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, OPTIONS, DELETE, PUT"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "User-Agent,Keep-Alive,Content-Type"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"ValueSet\",\n    \"id\": \"eb0672b6-6340-4651-869b-0fecb1b70564\",\n    \"url\": \"http://snomed.info/sct?fhir_vs=ecl/<<763158003\",\n    \"copyright\": \"This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (SNOMED International), and distributed by agreement between SNOMED International and HL7. Implementer use of SNOMED CT is not covered by this agreement.\",\n    \"expansion\": {\n        \"id\": \"516f3f79-3ba6-48d8-889d-b394c615a083\",\n        \"timestamp\": \"2022-07-19T09:34:36+00:00\",\n        \"total\": 159,\n        \"offset\": 0,\n        \"parameter\": [\n            {\n                \"name\": \"version\",\n                \"valueUri\": \"http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20220630\"\n            },\n            {\n                \"name\": \"displayLanguage\",\n                \"valueString\": \"en\"\n            }\n        ],\n        \"contains\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"7947003\",\n                \"display\": \"Aspirin-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"358427004\",\n                \"display\": \"Aspirin-containing product in oral dose form\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"350314003\",\n                \"display\": \"Aspirin-containing product in rectal dose form\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"398767009\",\n                \"display\": \"Aspirin- and glycine-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"412566001\",\n                \"display\": \"Buffered aspirin-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"412096001\",\n                \"display\": \"Aspirin- and codeine-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"412569008\",\n                \"display\": \"Aspirin- and caffeine-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"409311005\",\n                \"display\": \"Aspirin- and pravastatin-containing product\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"319775004\",\n                \"display\": \"Aspirin 75 mg oral tablet\"\n            },\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"424102008\",\n                \"display\": \"Aspirin- and paracetamol-containing product\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "List all members of a given SNOMED refset",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=refset/723264001&count=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=refset/723264001"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "List all SNOMED concepts in the Lateralizable body structure reference set."
+          },
+          "response": []
+        },
+        {
+          "name": "Expand an implicit ValueSet using body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"valueSet\",\n            \"resource\": {\n                \"resourceType\": \"ValueSet\",\n                \"compose\": {\n                    \"include\": [\n                        {\n                            \"system\": \"http://snomed.info/sct\",\n                            \"filter\": [\n                                {\n                                    \"property\": \"parent\",\n                                    \"op\": \"=\",\n                                    \"value\": \"138875005\"\n                                }\n                            ]\n                        }\n                    ]\n                }\n            }\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Expand an implicit ValueSet using body with properties",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"valueSet\",\n            \"resource\": {\n                \"resourceType\": \"ValueSet\",\n                \"compose\": {\n                    \"include\": [\n                        {\n                            \"system\": \"http://snomed.info/sct\",\n                            \"filter\": [\n                                {\n                                    \"property\": \"parent\",\n                                    \"op\": \"=\",\n                                    \"value\": \"138875005\"\n                                }\n                            ]\n                        }\n                    ]\n                }\n            }\n        },\n        {\n            \"name\": \"property\",\n            \"valueString\": \"sufficientlyDefined\"\n        },\n        {\n            \"name\": \"property\",\n            \"valueString\": \"inactive\"\n        },\n        {\n            \"name\": \"property\",\n            \"valueString\": \"parent\"\n        },\n        {\n            \"name\": \"count\",\n            \"valueInteger\": 10000\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Expand implict set of all SNOMED concepts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs&count=10&offset=0",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Expand an implicit ValueSet of all SNOMED CT concepts. If there is no module in the implicit ValueSet url and no version parameter is given then the latest version of the International Edition will be used."
+          },
+          "response": []
+        },
+        {
+          "name": "Search within implict set of all SNOMED concepts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs&count=10&offset=0&filter=myocar inf",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$expand"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "filter",
+                  "value": "myocar inf"
+                }
+              ]
+            },
+            "description": "Expand an implicit ValueSet of all SNOMED CT concepts filtered using a multi-prefix term search. Searching for \"myocar inf\" we expect to find \"Myocardial infarction\" and others.\n\nIf there is no module in the ValueSet url and no version parameter is given then the latest version of the International Edition will be used."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validate",
+      "item": [
+        {
+          "name": "Validate code within SNOMED refset",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$validate-code?url=http://snomed.info/sct?fhir_vs=refset/723264001&system=http://snomed.info/sct&code=77905000&display=Adrenal vein",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$validate-code"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_vs=refset/723264001"
+                },
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "code",
+                  "value": "77905000"
+                },
+                {
+                  "key": "display",
+                  "value": "Adrenal vein"
+                }
+              ]
+            },
+            "description": "Validate that a code is within the SNOMED CT Lateralizable body structure reference set."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate code within simple ValueSet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/$validate-code?url=http://example.com/fhir/vs/sex&system=http://snomed.info/sct&code=248152002",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$validate-code"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://example.com/fhir/vs/sex"
+                },
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "code",
+                  "value": "248152002"
+                },
+                {
+                  "key": "display",
+                  "value": "Female",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Validate that a code is within a simple FHIR ValueSet."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate code via POST",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"url\",\n      \"valueUri\": \"http://snomed.info/sct?fhir_vs=isa/27624003\"\n    },\n    {\n      \"name\": \"coding\",\n      \"valueCoding\": {\n        \"code\": \"707480001\",\n        \"system\": \"http://snomed.info/sct\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/ValueSet/$validate-code",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "$validate-code"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ValueSet - tear down",
+      "item": [
+        {
+          "name": "Delete a ValueSet by url and version",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet?url=http://example.com/fhir/vs/sex&version=0.1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet"
+              ],
+              "query": [
+                {
+                  "key": "url",
+                  "value": "http://example.com/fhir/vs/sex"
+                },
+                {
+                  "key": "version",
+                  "value": "0.1"
+                }
+              ]
+            },
+            "description": "Delete all ValueSets matching the url and version values specified."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a ValueSet by specific id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ValueSet/sex",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ValueSet",
+                "sex"
+              ]
+            },
+            "description": "Delete a ValueSet by id."
+          },
+          "response": []
+        }
+      ],
+      "description": "The definition of a value set is used to create a simple collection of codes suitable for use for data entry or validation.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Translate",
+      "item": [
+        {
+          "name": "Translate inactive SNOMED CT code to active code using \"SAME AS\" map",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ConceptMap/$translate?code=134811001&system=http://snomed.info/sct&url=http://snomed.info/sct?fhir_cm=900000000000527005",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ConceptMap",
+                "$translate"
+              ],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "134811001"
+                },
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct?fhir_cm=900000000000527005"
+                }
+              ]
+            },
+            "description": "Historical Association find the \"SAME AS\" target for inactivated concept"
+          },
+          "response": []
+        },
+        {
+          "name": "Translate SNOMED CT code to ICD-10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ConceptMap/$translate?code=254153009&system=http://snomed.info/sct&targetsystem=http://hl7.org/fhir/sid/icd-10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ConceptMap",
+                "$translate"
+              ],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "254153009"
+                },
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "targetsystem",
+                  "value": "http://hl7.org/fhir/sid/icd-10"
+                },
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct/900000000000207008/version/20200131?fhir_cm=447562003",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Translate SNOMED CT code to ICD-10-CM",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/ConceptMap/$translate?code=254153009&system=http://snomed.info/sct&version=http://snomed.info/sct/731000124108&targetsystem=http://hl7.org/fhir/sid/icd-10-cm",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "ConceptMap",
+                "$translate"
+              ],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "254153009"
+                },
+                {
+                  "key": "system",
+                  "value": "http://snomed.info/sct"
+                },
+                {
+                  "key": "version",
+                  "value": "http://snomed.info/sct/731000124108",
+                  "description": "US Edition, where the implicit map exists"
+                },
+                {
+                  "key": "targetsystem",
+                  "value": "http://hl7.org/fhir/sid/icd-10-cm"
+                },
+                {
+                  "key": "url",
+                  "value": "http://snomed.info/sct/900000000000207008/version/20200131?fhir_cm=447562003",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Translate a code from one value set to another, based on the existing value set and concept maps resources, and/or other additional knowledge available to the server",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Batch (work in progress)",
+      "item": [
+        {
+          "name": "Batch $lookup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"type\" : \"batch\",\n   \"resourceType\" : \"Bundle\",\n   \"entry\" : [\n      {\n         \"request\" : {\n            \"method\" : \"POST\",\n            \"url\" : \"CodeSystem/$lookup\"\n         },\n         \"resource\" : {\n            \"resourceType\" : \"Parameters\",\n            \"parameter\" : [\n               {\n                  \"valueUri\" : \"http://loinc.org\",\n                  \"name\" : \"system\"\n               },\n               {\n                  \"valueCode\" : \"23245-4\",\n                  \"name\" : \"code\"\n               }\n            ]\n         }\n      },\n      {\n         \"resource\" : {\n            \"parameter\" : [\n               {\n                  \"name\" : \"system\",\n                  \"valueUri\" : \"http://snomed.info/sct\"\n               },\n               {\n                  \"valueCode\" : \"17311000168105\",\n                  \"name\" : \"code\"\n               }\n            ],\n            \"resourceType\" : \"Parameters\"\n         },\n         \"request\" : {\n            \"method\" : \"POST\",\n            \"url\" : \"CodeSystem/$lookup\"\n         }\n      }\n   ]\n}\n"
+            },
+            "url": {
+              "raw": "{{url}}",
+              "host": [
+                "{{url}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Batch $lookup",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/fhir+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n   \"type\" : \"batch\",\n   \"resourceType\" : \"Bundle\",\n   \"entry\" : [\n      {\n         \"request\" : {\n            \"method\" : \"POST\",\n            \"url\" : \"CodeSystem/$lookup\"\n         },\n         \"resource\" : {\n            \"resourceType\" : \"Parameters\",\n            \"parameter\" : [\n               {\n                  \"valueUri\" : \"http://loinc.org\",\n                  \"name\" : \"system\"\n               },\n               {\n                  \"valueCode\" : \"23245-4\",\n                  \"name\" : \"code\"\n               }\n            ]\n         }\n      },\n      {\n         \"resource\" : {\n            \"parameter\" : [\n               {\n                  \"name\" : \"system\",\n                  \"valueUri\" : \"http://snomed.info/sct\"\n               },\n               {\n                  \"valueCode\" : \"17311000168105\",\n                  \"name\" : \"code\"\n               }\n            ],\n            \"resourceType\" : \"Parameters\"\n         },\n         \"request\" : {\n            \"method\" : \"POST\",\n            \"url\" : \"CodeSystem/$lookup\"\n         }\n      }\n   ]\n}\n"
+                },
+                "url": {
+                  "raw": "{{url}}",
+                  "host": [
+                    "{{url}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.19.3"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 21 Dec 2020 00:10:55 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "UCiD5S2mfYN23WSC"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "must-revalidate, max-age=1"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept,Origin,Accept-Encoding,Accept-Language,Authorization"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "HAPI FHIR 5.2.0 REST Server (FHIR Server; FHIR 4.0.1/R4)"
+                },
+                {
+                  "key": "Content-Location",
+                  "value": "https://ontoserver.australiaeast.cloudapp.azure.com/fhir/Bundle/52867931-4973-4e57-9f58-da6fa69dabe1"
+                },
+                {
+                  "key": "Location",
+                  "value": "https://ontoserver.australiaeast.cloudapp.azure.com/fhir/Bundle/52867931-4973-4e57-9f58-da6fa69dabe1"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000 ; includeSubDomains"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"resourceType\": \"Bundle\",\n    \"id\": \"52867931-4973-4e57-9f58-da6fa69dabe1\",\n    \"type\": \"batch-response\",\n    \"link\": [\n        {\n            \"relation\": \"self\",\n            \"url\": \"https://r4.ontoserver.csiro.au/fhir\"\n        }\n    ],\n    \"entry\": [\n        {\n            \"resource\": {\n                \"resourceType\": \"Parameters\",\n                \"parameter\": [\n                    {\n                        \"name\": \"name\",\n                        \"valueString\": \"LOINC v2.68\"\n                    },\n                    {\n                        \"name\": \"version\",\n                        \"valueString\": \"2.68\"\n                    },\n                    {\n                        \"name\": \"display\",\n                        \"valueString\": \"Mycobacterium avium ss paratuberculosis DNA [Presence] in Unspecified specimen by NAA with probe detection\"\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"parent\"\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueCode\": \"LP375190-8\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"designation\",\n                        \"part\": [\n                            {\n                                \"name\": \"language\",\n                                \"valueCode\": \"en\"\n                            },\n                            {\n                                \"name\": \"use\",\n                                \"valueCoding\": {\n                                    \"system\": \"http://snomed.info/sct\",\n                                    \"code\": \"900000000000013009\",\n                                    \"display\": \"Synonym\"\n                                }\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueString\": \"M avium paraTB DNA XXX Ql NAA+probe\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"designation\",\n                        \"part\": [\n                            {\n                                \"name\": \"language\",\n                                \"valueCode\": \"en\"\n                            },\n                            {\n                                \"name\": \"use\",\n                                \"valueCoding\": {\n                                    \"system\": \"http://snomed.info/sct\",\n                                    \"code\": \"900000000000003001\",\n                                    \"display\": \"Fully specified name\"\n                                }\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueString\": \"Mycobacterium avium subspecies paratuberculosis DNA:PrThr:Pt:XXX:Ord:Probe.amp.tar\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"response\": {\n                \"status\": \"200\"\n            }\n        },\n        {\n            \"resource\": {\n                \"resourceType\": \"Parameters\",\n                \"parameter\": [\n                    {\n                        \"name\": \"name\",\n                        \"valueString\": \"SNOMED Clinical Terms Australian extension\"\n                    },\n                    {\n                        \"name\": \"version\",\n                        \"valueString\": \"http://snomed.info/sct/32506021000036107/version/20201231\"\n                    },\n                    {\n                        \"name\": \"display\",\n                        \"valueString\": \"Panadol\"\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"parent\"\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueCode\": \"30560011000036108\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"child\"\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueCode\": \"54012011000036102\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"child\"\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueCode\": \"5292011000036109\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"sufficientlyDefined\"\n                            },\n                            {\n                                \"name\": \"valueBoolean\",\n                                \"valueBoolean\": false\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"effectiveTime\"\n                            },\n                            {\n                                \"name\": \"valueString\",\n                                \"valueString\": \"20140630\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"property\",\n                        \"part\": [\n                            {\n                                \"name\": \"code\",\n                                \"valueCode\": \"moduleId\"\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueCode\": \"900062011000036108\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"designation\",\n                        \"part\": [\n                            {\n                                \"name\": \"language\",\n                                \"valueCode\": \"en\"\n                            },\n                            {\n                                \"name\": \"use\",\n                                \"valueCoding\": {\n                                    \"system\": \"http://snomed.info/sct\",\n                                    \"code\": \"900000000000013009\",\n                                    \"display\": \"Synonym\"\n                                }\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueString\": \"Panadol\"\n                            }\n                        ]\n                    },\n                    {\n                        \"name\": \"designation\",\n                        \"part\": [\n                            {\n                                \"name\": \"language\",\n                                \"valueCode\": \"en\"\n                            },\n                            {\n                                \"name\": \"use\",\n                                \"valueCoding\": {\n                                    \"system\": \"http://snomed.info/sct\",\n                                    \"code\": \"900000000000003001\",\n                                    \"display\": \"Fully specified name\"\n                                }\n                            },\n                            {\n                                \"name\": \"value\",\n                                \"valueString\": \"Panadol (trade product)\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"response\": {\n                \"status\": \"200\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Example usage of the [batch](https://hl7.org/fhir/r4/http.html#transaction) operation.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Utility Functions",
+      "item": [
+        {
+          "name": "Bulk Load Partial Hierarchy",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"system\": \"http://snomed.info/sct\",\n    \"includeTerms\": true,\n    \"codes\": [\"84410009\", \"386617003\"]\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/partial-hierarchy",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "partial-hierarchy"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Capability Statement",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/metadata",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "metadata"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Terminology Capabilities",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/metadata?mode=terminology",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "metadata"
+          ],
+          "query": [
+            {
+              "key": "mode",
+              "value": "terminology"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "password",
+        "value": "{{snowstorm-lite-admin-password}}",
+        "type": "string"
+      },
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "http://localhost:8080/fhir",
+      "type": "string"
+    },
+    {
+      "key": "snowstorm-lite-admin-password",
+      "value": "yourAdminPasswordsnowstormLITE",
+      "type": "string"
+    }
+  ]
+}

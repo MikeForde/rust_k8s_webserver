@@ -1,22 +1,34 @@
 # SNOMED Browser
 
-This project is a small Rust web application that provides a browser for SNOMED CT concepts using a `snowstorm-lite` FHIR endpoint.
+This project is a Rust web application that provides a browser for SNOMED CT concepts using a `snowstorm-lite` FHIR endpoint.
 
-It serves a simple HTML UI that lets you:
+It serves a HTML UI that lets you:
 
 - search SNOMED CT terms
 - inspect concept details for a selected code
 - proxy requests to `snowstorm-lite` from the browser through the Rust server
+- work across additional pages for CodeSystem, ValueSet, translation, metadata, batch, and admin operations from the supplied Postman collection
 
 The server is built with `actix-web` and uses `reqwest` to call the backing FHIR API.
 
+## Pages
+
+The application includes these pages:
+
+- `/` simple SNOMED browser for search and concept drill-down
+- `/codesystems` list CodeSystems, run `$lookup`, and test `$subsumes`
+- `/valuesets` list ValueSets, run `$expand`, ECL, and `$validate-code`
+- `/mapping` run `$translate`, batch lookup, partial hierarchy, and metadata operations
+- `/admin` create, update, and delete ValueSets behind password protection
+
 ## How It Works
 
-The application exposes three routes:
+The application exposes these main routes:
 
-- `/` renders the browser UI
+- `/`, `/codesystems`, `/valuesets`, `/mapping`, `/admin` render HTML pages
 - `/api/search?q=<term>` calls FHIR `ValueSet/$expand` against `snowstorm-lite`
 - `/api/lookup/<code>` calls FHIR `CodeSystem/$lookup` for a SNOMED CT concept
+- `/api/fhir` forwards validated FHIR requests from the additional pages to the configured Snowstorm Lite base URL
 
 Search results return concept code and display text. Selecting a concept loads additional fields where available, including:
 
@@ -30,13 +42,21 @@ Search results return concept code and display text. Selecting a concept loads a
 
 ## Configuration
 
-The application uses the `SNOWSTORM_BASE` environment variable to locate the backing FHIR service.
+Uses local `.env` file locally or OpenShift equivalent.
+
+Required settings for the expanded UI:
+
+- `SNOWSTORM_BASE` points at the backing FHIR endpoint
+- `APP_ADMIN_PASSWORD` protects destructive UI actions on the `/admin` page
+- `SNOWSTORM_ADMIN_USERNAME` and `SNOWSTORM_ADMIN_PASSWORD` are used by the server when forwarding protected ValueSet write requests upstream
 
 Example:
 
 ```bash
-export SNOWSTORM_BASE="https://your-snowstorm-lite-host/fhir"
+cp .env.example .env
 ```
+
+The checked-in `.env` contains generated secrets for local development. If your Snowstorm Lite instance uses a different admin password, update `SNOWSTORM_ADMIN_PASSWORD` in `.env` to match it.
 
 If `SNOWSTORM_BASE` is not set, the app falls back to the default configured in `src/main.rs`.
 
@@ -84,19 +104,32 @@ docker run -p 8080:8080 -e SNOWSTORM_BASE="https://your-snowstorm-lite-host/fhir
 
 ## API Notes
 
-The application currently targets the following FHIR operations:
+The application covers these operations from the Snowstorm Lite Postman collection:
 
-- `ValueSet/$expand?url=http://snomed.info/sct?fhir_vs&filter=<term>`
-- `CodeSystem/$lookup?system=http://snomed.info/sct&code=<code>`
+- `CodeSystem` search and filtered lookup
+- `CodeSystem/$lookup`
+- `CodeSystem/$subsumes`
+- `ValueSet`
+- `ValueSet/$expand`
+- `ValueSet/$validate-code`
+- `ConceptMap/$translate`
+- root-level FHIR batch requests
+- `partial-hierarchy`
+- `metadata` and `metadata?mode=terminology`
 
-This keeps the browser UI simple while relying on `snowstorm-lite` for terminology search and concept lookup behaviour.
+Destructive ValueSet create, update, and delete requests are blocked unless:
+
+- the user supplies the correct `APP_ADMIN_PASSWORD`
+- the server has upstream Snowstorm admin credentials configured
+
+This keeps the default browser page simple while exposing the wider Snowstorm Lite API surface on dedicated pages.
 
 ## OpenShift / Prebuilt Binary Approach
 
-This repository still uses the earlier prebuilt-binary deployment approach for container usage and OpenShift experiments:
+Repository uses prebuilt-binary deployment approach for container usage and OpenShift experiments:
 
 - build the Rust binary ahead of time
 - copy the binary into the runtime image
 - avoid compiling in-cluster
 
-That approach reduces deployment-time compilation and avoids depending on crate downloads during image build in restricted environments.
+This approach reduces deployment-time compilation and avoids depending on crate downloads during image build in restricted environments.

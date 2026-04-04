@@ -18,6 +18,9 @@ vendor/
 # VSCode/devcontainer junk
 .vscode/
 
+# Local secrets
+.env
+
 # macOS junk
 .DS_Store
 **/.DS_Store

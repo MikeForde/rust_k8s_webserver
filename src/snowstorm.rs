@@ -1,7 +1,142 @@
-use reqwest::Client;
+use reqwest::{header::CONTENT_TYPE, Client, Method, Url};
 use serde_json::Value;
 
-use crate::models::{LookupResponse, RelatedConcept, SearchItem};
+use crate::models::{LookupResponse, ProxyRequest, QueryParam, RelatedConcept, SearchItem};
+
+pub struct UpstreamResponse {
+    pub status: u16,
+    pub content_type: Option<String>,
+    pub body: String,
+}
+
+pub fn is_destructive_request(method: &str, path: &str) -> bool {
+    let normalized_path = path.trim_matches('/');
+    matches!(
+        method.trim().to_ascii_uppercase().as_str(),
+        "POST" | "PUT" | "DELETE"
+    ) && (normalized_path == "ValueSet" || is_valueset_resource_path(normalized_path))
+}
+
+pub async fn proxy_fhir_request(
+    client: &Client,
+    snowstorm_base: &str,
+    request: &ProxyRequest,
+    admin_auth: Option<(&str, &str)>,
+) -> Result<UpstreamResponse, String> {
+    let method = Method::from_bytes(request.method.trim().to_ascii_uppercase().as_bytes())
+        .map_err(|_| format!("Unsupported HTTP method: {}", request.method))?;
+
+    if !matches!(
+        method,
+        Method::GET | Method::POST | Method::PUT | Method::DELETE
+    ) {
+        return Err(format!("Unsupported HTTP method: {}", request.method));
+    }
+
+    let url = build_fhir_url(snowstorm_base, &request.path, &request.query)?;
+    let mut builder = client.request(method.clone(), url).header(
+        "Accept",
+        "application/fhir+json, application/json, application/json+fhir",
+    );
+
+    if let Some((username, password)) = admin_auth {
+        builder = builder.basic_auth(username, Some(password));
+    }
+
+    if !matches!(method, Method::GET | Method::DELETE) {
+        if let Some(body) = request.body.as_ref() {
+            builder = builder
+                .header(CONTENT_TYPE, "application/fhir+json")
+                .body(body.to_string());
+        }
+    }
+
+    let response = builder
+        .send()
+        .await
+        .map_err(|e| format!("Snowstorm request failed: {e}"))?;
+
+    let status = response.status().as_u16();
+    let content_type = response
+        .headers()
+        .get(CONTENT_TYPE)
+        .and_then(|value| value.to_str().ok())
+        .map(|value| value.to_string());
+    let body = response
+        .text()
+        .await
+        .map_err(|e| format!("Failed to read Snowstorm response body: {e}"))?;
+
+    Ok(UpstreamResponse {
+        status,
+        content_type,
+        body,
+    })
+}
+
+fn build_fhir_url(base: &str, path: &str, query: &[QueryParam]) -> Result<Url, String> {
+    let normalized_path = normalize_proxy_path(path)?;
+    if !is_allowed_fhir_path(&normalized_path) {
+        return Err(format!("Unsupported Snowstorm path: {}", normalized_path));
+    }
+
+    let base = base.trim_end_matches('/');
+    let url_text = if normalized_path.is_empty() {
+        base.to_string()
+    } else {
+        format!("{base}/{normalized_path}")
+    };
+
+    let mut url = Url::parse(&url_text).map_err(|e| format!("Invalid Snowstorm URL: {e}"))?;
+
+    {
+        let mut pairs = url.query_pairs_mut();
+        for param in query {
+            if !param.key.trim().is_empty() {
+                pairs.append_pair(&param.key, &param.value);
+            }
+        }
+    }
+
+    Ok(url)
+}
+
+fn normalize_proxy_path(path: &str) -> Result<String, String> {
+    let normalized = path.trim().trim_matches('/').to_string();
+
+    if normalized.contains("://") || normalized.contains("..") || normalized.starts_with('?') {
+        return Err("Invalid Snowstorm path.".to_string());
+    }
+
+    Ok(normalized)
+}
+
+fn is_allowed_fhir_path(path: &str) -> bool {
+    matches!(
+        path,
+        "" | "CodeSystem"
+            | "CodeSystem/$lookup"
+            | "CodeSystem/$subsumes"
+            | "ValueSet"
+            | "ValueSet/$expand"
+            | "ValueSet/$validate-code"
+            | "ConceptMap/$translate"
+            | "partial-hierarchy"
+            | "metadata"
+    ) || is_valueset_resource_path(path)
+}
+
+fn is_valueset_resource_path(path: &str) -> bool {
+    let Some(id) = path.strip_prefix("ValueSet/") else {
+        return false;
+    };
+
+    !id.is_empty()
+        && !id.contains('/')
+        && id
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.'))
+}
 
 pub async fn search_concepts(
     client: &Client,
