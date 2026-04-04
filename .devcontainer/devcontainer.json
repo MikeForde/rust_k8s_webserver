@@ -9,8 +9,16 @@
     "ghcr.io/devcontainers/features/git:1": {}
   },
   "runArgs": [
-    "--platform=linux/amd64"
+    "--platform=linux/amd64",
+    "-p", "8080:8080"
   ],
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Rust Web Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
   "remoteEnv": {
     "PATH": "/home/vscode/.opencode/bin:${containerEnv:PATH}"
   },

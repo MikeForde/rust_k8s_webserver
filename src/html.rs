@@ -1481,9 +1481,9 @@ fn tool_page(
 
 pub fn browser_page() -> String {
     render_page(
-        "Simple SNOMED Browser",
-        "Simple SNOMED Browser",
-        "Search SNOMED CT terms using Snowstorm Lite. The main browser stays intact, with extra pages added for the broader FHIR API.",
+        "SNOMED Browser",
+        "SNOMED Browser",
+        "Search SNOMED CT International terms using Snowstorm Lite.",
         BROWSER_BODY,
         BROWSER_SCRIPT,
         "browser",
@@ -1494,7 +1494,7 @@ pub fn codesystems_page() -> String {
     tool_page(
         "Snowstorm Lite Code Systems",
         "Code Systems",
-        "Browse CodeSystem resources, inspect concept details, and compare concept hierarchy relationships using the Postman collection examples.",
+        "Browse CodeSystem resources, inspect concept details, and compare concept hierarchy relationships.",
         "codesystems",
         CODESYSTEM_OPERATIONS,
     )
@@ -1504,7 +1504,7 @@ pub fn valuesets_page() -> String {
     tool_page(
         "Snowstorm Lite ValueSets",
         "ValueSet Explorer",
-        "Expand named and implicit ValueSets, run ECL-backed searches, and validate codes against Snowstorm Lite.",
+        "Expand named and implicit ValueSets, run ECL-backed searches, and validate codes.",
         "valuesets",
         VALUESET_OPERATIONS,
     )
@@ -1524,7 +1524,7 @@ pub fn admin_page() -> String {
     tool_page(
         "Snowstorm Lite Admin",
         "Protected ValueSet Admin",
-        "Create, update, and delete ValueSets from the browser. Each write action is password-gated locally and forwarded with Snowstorm admin credentials from .env.",
+        "Create, update, and delete ValueSets from the browser. Each write action is password-protected.",
         "admin",
         ADMIN_OPERATIONS,
     )
