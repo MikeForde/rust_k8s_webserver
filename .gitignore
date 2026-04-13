@@ -1,7 +1,13 @@
-# Ignore build output
+# Ignore build output under target
 target/*
 
-# Re-include the release artifact we want to keep
+# Re-include the release directory itself
+!target/release/
+
+# Ignore everything inside release
+target/release/*
+
+# Re-include the one binary we want
 !target/release/hello_cargo
 
 # Other ignores
