@@ -1,11 +1,8 @@
 # Ignore build output
-!target/release/hello_cargo
 target/*
 
 # Re-include the release artifact we want to keep
-!target/release/
-target/release/*
-
+!target/release/hello_cargo
 
 # Other ignores
 vendor/
