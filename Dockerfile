@@ -1,6 +1,7 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal
 
-RUN microdnf install -y ca-certificates \
+RUN microdnf update -y \
+    && microdnf install -y ca-certificates \
     && microdnf clean all
 
 WORKDIR /app
